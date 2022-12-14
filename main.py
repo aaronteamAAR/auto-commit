@@ -1,20 +1,21 @@
 import asyncio
+import sys
+import time
+import random
+
 import os
-from watchfiles import awatch, Change, DefaultFilter, watch
+import shutil
+import logging
+
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
 
 
 
 
 directory = 'C:/Users/Last Hokage/Documents/auto-commit'
 
-class WebFilter(DefaultFilter):
-    allowed_extensions = '.html', '.css', '.js'
 
-    def __call__(self, change: Change, path: str) -> bool:
-        return (
-            super().__call__(change, path) and
-            path.endswith(self.allowed_extensions)
-        )
 
 for filename in os.listdir(directory):
     f = os.path.join(directory, filename)
@@ -23,10 +24,48 @@ for filename in os.listdir(directory):
        print(f)
 
 
+class FileEventHandler(FileSystemEventHandler):
 
-def main():
-     for changes in watch(f):
-         print(changes)
+    def on_created(self, event):
+        print(f"Hey, {event.src_path} has been created! ++")
+        print(event.src_path)
+
+    def on_deleted(self, event):
+        print(f"Oops! Someone deleted {event.src_path}! - -")
+
+    def on_modified(self, event):
+        print(f"Hey there!, {event.src_path} has been modified ++")
+        
+    
+    def on_moved(self, event):
+        print(f"Someone moved {event.src_path} to {event.dest_path}")
+        
+
+
+# async def main():
+#      async for changes in awatch(f, watch_filter=Web):
+#          print(changes)
 
  
-asyncio.run(main())
+# asyncio.run(main())
+
+
+event_handler = FileEventHandler()
+
+# Initialize Observer
+observer = Observer()
+
+# Schedule the Observer
+observer.schedule(event_handler, directory, recursive=True)
+
+
+# Start the Observer
+observer.start()
+
+try:
+    while True:
+        time.sleep(10)
+        print("still running...")
+except KeyboardInterrupt:
+    print("stopped!")
+    observer.stop()
