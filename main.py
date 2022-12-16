@@ -1,6 +1,6 @@
 import asyncio
 import sys
-import os, time
+import os, time, datetime
 import asyncio, logging
 from colorama import Fore, init
 
@@ -25,20 +25,39 @@ BG_RED = Fore.LIGHTRED_EX
 
 directory = 'C:/Users/Last Hokage/Documents/auto-commit'
 # Watch for changes in dir
+now =  (datetime.datetime.now()).strftime("%H:%M:%S")
+last_trigger_time = time.time()
+
 
 class FileEventHandler(FileSystemEventHandler):
+    
+    
+    def __init__(self):
+        self.event_time=time.time()
 
+    def on_any_event(self, event):
+        now=time.time()
+        timedelta=now-self.event_time
+        self.event_time=now
+        
     def on_created(self, event):
-        print(f"{BG_GREEN}Hey, {event.src_path} has been created!")
+        self.plugins_pending.append(event.src_path)
+        print(f"{BG_GREEN}{now} Hey, {event.src_path} has been created!")
 
     def on_deleted(self, event):
-        print(f"{BG_RED}Oops! Someone deleted {event.src_path}!")
+        print(f"{BG_RED}{now} Oops! Someone deleted {event.src_path}!")
 
     def on_modified(self, event):
-        print(f"{BG_BLUE}Hey there!, {event.src_path} has been modified")
+        global last_trigger_time
+        current_time = time.time()
+        
+        if event.src_path.find('~') == -1 and (current_time - last_trigger_time) > 1:
+            last_trigger_time = current_time
+            print(f"{BG_BLUE}{now} Hey there!, {event.src_path} has been modified")
+       
     
     def on_moved(self, event):
-        print(f"{BG_YELLOW}Someone moved {event.src_path} to {event.dest_path}")
+        print(f"{BG_YELLOW}{now} Someone moved {event.src_path} to {event.dest_path}")
         
 
 
