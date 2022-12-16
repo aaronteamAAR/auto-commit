@@ -8,14 +8,13 @@ from watchfiles import watch, run_process
 
 from watchdog.observers import Observer
 from watchdog.events import LoggingEventHandler
+from watchdog.utils.dirsnapshot import DirectorySnapshot
 
 
 
 
 directory = 'C:/Users/Last Hokage/Documents/auto-commit'
-
-
-
+# Watch for changes in dir 
 
 if __name__ == "__main__":
     logging.basicConfig(level= logging.INFO,
@@ -27,9 +26,9 @@ if __name__ == "__main__":
     observer = Observer()
     observer.schedule(event_handler, path, recursive=True)
     observer.start()
-    
-    
-    
+
+
+# Make sure the files goes through at least 8 events 
     try:
         while True:
             time.sleep(1)
