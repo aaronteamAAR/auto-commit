@@ -29,6 +29,7 @@ now =  (datetime.datetime.now()).strftime("%H:%M:%S")
 last_trigger_time = time.time()
 
 
+
 class FileEventHandler(FileSystemEventHandler):
     
     
@@ -41,7 +42,7 @@ class FileEventHandler(FileSystemEventHandler):
         self.event_time=now
         
     def on_created(self, event):
-        self.plugins_pending.append(event.src_path)
+        # self.plugins_pending.append(event.src_path)
         print(f"{BG_GREEN}{now} Hey, {event.src_path} has been created!")
 
     def on_deleted(self, event):
