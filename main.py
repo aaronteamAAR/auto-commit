@@ -29,7 +29,9 @@ changes = 0
 # Watch for changes in dir
 now =  (datetime.datetime.now()).strftime("%H:%M:%S")
 last_trigger_time = time.time()
-C
+
+
+
 
 
 class FileEventHandler(FileSystemEventHandler):
