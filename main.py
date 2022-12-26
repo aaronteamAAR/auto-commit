@@ -1,5 +1,5 @@
 import asyncio
-import sys
+import sys, subprocess
 import os, time, datetime
 import asyncio, logging
 from colorama import Fore, init
@@ -24,6 +24,8 @@ BG_RED = Fore.LIGHTRED_EX
 
 
 directory = 'C:/Users/Last Hokage/Documents/auto-commit'
+num_changes = 16
+changes = 0
 # Watch for changes in dir
 now =  (datetime.datetime.now()).strftime("%H:%M:%S")
 last_trigger_time = time.time()
@@ -49,8 +51,17 @@ class FileEventHandler(FileSystemEventHandler):
         print(f"{BG_RED}{now} Oops! Someone deleted {event.src_path}!")
 
     def on_modified(self, event):
-        global last_trigger_time
+        global last_trigger_time, changes
+        changes += 1
         current_time = time.time()
+        try:
+            if changes >= num_changes:
+                subprocess.run(['git', 'add', '.'], check=True)
+                subprocess.run(['git', 'commit', '-m',"my commit"], check=True)
+                subprocess.run(['git', 'push'], check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Git push error with changes to : {e}, try to resolve this manually")
+            changes = 0
         
         if event.src_path.find('~') == -1 and (current_time - last_trigger_time) > 1:
             last_trigger_time = current_time
