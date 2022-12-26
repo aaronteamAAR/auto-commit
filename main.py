@@ -33,7 +33,8 @@ last_trigger_time = time.time()
 
 # current branch
 
-def current 
+def currentBranch:
+    res =  
 
 
 class FileEventHandler(FileSystemEventHandler):
