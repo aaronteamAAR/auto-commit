@@ -31,7 +31,7 @@ now =  (datetime.datetime.now()).strftime("%H:%M:%S")
 last_trigger_time = time.time()
 
 
-# current brnach 
+# current branch 
 
 
 class FileEventHandler(FileSystemEventHandler):
