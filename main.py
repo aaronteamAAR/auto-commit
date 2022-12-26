@@ -33,7 +33,7 @@ last_trigger_time = time.time()
 
 # current branch
 
-def currentBranch:
+def currentBranch():
     res =  
 
 
