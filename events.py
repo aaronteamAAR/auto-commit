@@ -1,6 +1,6 @@
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
-# from checker import FileChecker
+from setup import FileChecker
 from colorama import Fore, Style, init
 import time,os, datetime
 
@@ -9,7 +9,7 @@ init()
 
 
 BG_GREEN = Fore.LIGHTGREEN_EX
-
+.
 BG_BLUE = Fore.BLUE
 
 BLANK = Fore.RESET
