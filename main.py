@@ -34,7 +34,7 @@ last_trigger_time = time.time()
 # current branch
 
 def currentBranch():
-    res =  
+    res = subprocess.run
 
 
 class FileEventHandler(FileSystemEventHandler):
