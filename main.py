@@ -72,7 +72,7 @@ class FileEventHandler(FileSystemEventHandler):
             if changes >= num_changes:
                 subprocess.run(['git', 'add', '.'], check=True)
                 subprocess.run(['git', 'commit', '-m',"my commit"], check=True)
-                subprocess.run([f'git', 'push', 'origin', {branch}], check=True)
+                subprocess.run(['git', 'push', 'origin', f'{branch}'], check=True)
         except subprocess.CalledProcessError as e:
             print(f"Git push error with changes to : {e}, try to resolve this manually")
             changes = 0
