@@ -21,9 +21,12 @@ BG_YELLOW = Fore.YELLOW
 
 BG_RED = Fore.LIGHTRED_EX
 
+# Get directory location 
 
+curr_dir = os.getcwd()
+print(curr_dir.replace('\\', '/'))
 
-directory = 'C:/Users/Last Hokage/Documents/auto-commit'
+directory = curr_dir
 num_changes = 20
 changes = 0
 # Watch for changes in dir
@@ -39,6 +42,8 @@ def currentBranch():
 
 
 branch = currentBranch()
+
+print(branch)
 
 
 class FileEventHandler(FileSystemEventHandler):
@@ -67,7 +72,7 @@ class FileEventHandler(FileSystemEventHandler):
             if changes >= num_changes:
                 subprocess.run(['git', 'add', '.'], check=True)
                 subprocess.run(['git', 'commit', '-m',"my commit"], check=True)
-                subprocess.run(['git', 'push'], check=True)
+                subprocess.run([f'git', 'push', 'origin', {branch}], check=True)
         except subprocess.CalledProcessError as e:
             print(f"Git push error with changes to : {e}, try to resolve this manually")
             changes = 0
