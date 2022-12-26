@@ -2,7 +2,7 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 # from checker import FileChecker
 from colorama import Fore, Style, init
-import time, config os, datetime
+import time,os, datetime
 
 
 init()
