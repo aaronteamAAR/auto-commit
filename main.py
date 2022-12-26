@@ -24,12 +24,12 @@ BG_RED = Fore.LIGHTRED_EX
 
 
 directory = 'C:/Users/Last Hokage/Documents/auto-commit'
-num_changes = 16
+num_changes = 20
 changes = 0
 # Watch for changes in dir
 now =  (datetime.datetime.now()).strftime("%H:%M:%S")
 last_trigger_time = time.time()
-
+C
 
 
 class FileEventHandler(FileSystemEventHandler):
