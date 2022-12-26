@@ -35,7 +35,7 @@ last_trigger_time = time.time()
 
 def currentBranch():
     res = subprocess.run(['git', 'rev-parse', '--abbrev-ref', "HEAD"], capture_output=True)
-    return res.stdout.decode()
+    return res.stdout.decode().strip
 
 
 class FileEventHandler(FileSystemEventHandler):
