@@ -9,7 +9,7 @@ init()
 
 
 BG_GREEN = Fore.LIGHTGREEN_EX
-.
+
 BG_BLUE = Fore.BLUE
 
 BLANK = Fore.RESET
