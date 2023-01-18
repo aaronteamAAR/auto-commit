@@ -1,8 +1,0 @@
-README.md
-setup.py
-Autocommit_cli.egg-info/PKG-INFO
-Autocommit_cli.egg-info/SOURCES.txt
-Autocommit_cli.egg-info/dependency_links.txt
-Autocommit_cli.egg-info/entry_points.txt
-Autocommit_cli.egg-info/requires.txt
-Autocommit_cli.egg-info/top_level.txt

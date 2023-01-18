@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='Autocommit-cli',
+    name='autocommit-cli',
     version='1.1.0',
     packages=find_packages(),
     include_package_data=True,
@@ -10,6 +10,6 @@ setup(
     ],
     entry_points='''
     [console_scripts]
-    autocommit=autocommit.cli:main
+    autocommit=autocommit:main
     '''
 )
