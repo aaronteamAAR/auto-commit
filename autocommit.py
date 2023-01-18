@@ -1,6 +1,5 @@
-import click
 import asyncio
-import sys, subprocess
+import sys, subprocess, click
 import os, time, datetime
 import asyncio, logging
 from colorama import Fore, init
