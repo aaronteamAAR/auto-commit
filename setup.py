@@ -10,6 +10,6 @@ setup(
     ],
     entry_points='''
     [console_scripts]
-    autocommit=autocommit:main
+    autocommit=autocommit.cli:main
     '''
 )

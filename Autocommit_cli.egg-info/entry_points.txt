@@ -1,2 +1,4 @@
-[console_scripts]
-autocommit = autocommit:main
+
+    [console_scripts]
+    autocommit=autocommit:main
+    
