@@ -13,6 +13,7 @@ init()
 @click.command()
 @click.option('--count', prompt="Your count number", default=1, help="Number of times to greet")
 @click.option('--name', prompt="Your name please!",  help="Who to greet")
+@click.option("--path", prompt="path to watch", help="choice a path to watch changes")
 
 def main(count, name):
     '''SIMPLE PROGRAM TO GREET MULTI TIMES'''
