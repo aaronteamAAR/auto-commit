@@ -114,21 +114,44 @@ if __name__ == "__main__":
 # i want to take  an argumnet to ask user wether to push auto or not  
 
 
-PUSHES=dict(autoPush="ap", manualPush="mp")
+PUSHES=dict(ap="autoPush", mp="manualPush")
+
+
+@click.group()
+
+def main():
+    pass
+
+
+
 
 @click.command()
-@click.argument( "push", default="mp", type=click.Choice(PUSHES.keys()))
-@click.option("-p", "--push", prompt="Set to auto-push pr do it yourself", help="Select to auto push or not!")
+@click.option("-i", "--init", prompt="initalize empty git repo", help="set to initalize an empty git repo", default=False)
+def git_init(initalize):
+    if not isinstance(initalize, bool):
+        TypeError("Argument must be a boolean(Yes or No)")
+    elif initalize == True:
+        print("hey")
+
+
+@click.command()
+@click.option("-p", "--push", prompt="Set to auto-push || manual-push", type=click.Choice(PUSHES.keys()), help="Select to auto push or not!", default=PUSHES['mp'])
+def push_type(push):
+
+    if push == "mp":
+        print("Good, your code won't auto push itself")
+    else:
+      print("Your code will now auto-push after a few number of file changes!")
+      subprocess.run(['git', 'push', 'origin', f'{branch}'], check=True)
 
 
 
-def main(push):
-    print(f"{PUSHES[push]}")
+def change():
+     print('yes')
 
-
-
-
+main.add_command(push_type)
+main.add_command(git_init)
 
 
 if __name__ == "__main__":
-    main()
+     main()
