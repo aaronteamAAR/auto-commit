@@ -1,7 +1,6 @@
-import asyncio
 import sys, subprocess, click
 import os, time, datetime
-import asyncio, logging
+import logging
 from colorama import Fore, init
 
 from watchdog.observers import Observer
@@ -9,23 +8,6 @@ from watchdog.events import LoggingEventHandler, FileSystemEventHandler
 from watchdog.utils.dirsnapshot import DirectorySnapshot
 
 init()
-
-@click.command()
-@click.option('--count', prompt="Your count number", default=1, help="Number of times to greet")
-@click.option('--name', prompt="Your name please!",  help="Who to greet")
-@click.option("--path", prompt="path to watch", help="choice a path to watch changes")
-
-def main(count, name):
-    '''SIMPLE PROGRAM TO GREET MULTI TIMES'''
-    for _ in range(count):
-        click.echo(f"helo,{name}")
-
-
-
-
-
-
-
 
 
 
@@ -124,3 +106,29 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         observer.stop()
     observer.join()
+
+
+
+# i want to take the path to a file as an argument 
+# i want to take the number of chnages as an argument 
+# i want to take  an argumnet to ask user wether to push auto or not  
+
+
+PUSHES=dict(autoPush="ap", manualPush="mp")
+
+@click.command()
+@click.argument( "push", default="mp", type=click.Choice(PUSHES.keys()))
+@click.option("-p", "--push", prompt="Set to auto-push pr do it yourself", help="Select to auto push or not!")
+
+
+
+def main(push):
+    print(f"{PUSHES[push]}")
+
+
+
+
+
+
+if __name__ == "__main__":
+    main()
