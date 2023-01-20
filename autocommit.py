@@ -30,8 +30,7 @@ curr_dir = os.getcwd()
 print(curr_dir.replace('\\', '/'))
 
 directory = curr_dir
-num_changes = 20
-changes = 0
+
 # Watch for changes in dir
 now =  (datetime.datetime.now()).strftime("%H:%M:%S")
 last_trigger_time = time.time()
@@ -146,6 +145,16 @@ def git_init(init):
         print("hey")
         
 
+@click.command()
+@click.option("--branch_name", "-b", required=True, help="Name of the branch to create")
+@click.option("--remote", "-r", required=True, help="Name of the remote to push to")
+def create_branch(branch_name, remote):
+    repo = Repo()
+    new_branch = repo.create_head(branch_name)
+    new_branch.checkout()
+    repo.remotes[remote].push(new_branch.name)
+    click.echo(f"Successfully created and pushed branch {branch_name} to remote {remote}.")
+
 
 @click.command()
 @click.option("-p", "--push", prompt="Set to auto-push || manual-push", type=click.Choice(PUSHES.keys()), help="Select to auto push or not!", default=PUSHES['mp'])
@@ -158,12 +167,25 @@ def push_type(push):
       subprocess.run(['git', 'push', 'origin', f'{branch}'], check=True)
 
 
-
-def change():
-     print('yes')
+@click.commaun()
+@click.option("--num_changes", "-n", type=int, required=True, help="Number of changes to make to occur for each commit session")
+def file_changes(changes):
+    num_changes = changes
+    change = 0
+    changes += 1
+    try:
+        if changes >= num_changes:
+            subprocess.run(['git', 'add', '.'], check=True)
+            subprocess.run(['git', 'commit', '-m',"my commit"], check=True)
+            subprocess.run(['git', 'push', 'origin', f'{branch}'], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Git push error with changes to : {e}, try to resolve this manually")
+        changes = 0
+    
 
 main.add_command(push_type)
 main.add_command(git_init)
+main.add_command(create_branch)
 
 
 if __name__ == "__main__":
