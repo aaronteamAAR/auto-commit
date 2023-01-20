@@ -1,6 +1,9 @@
-import sys, subprocess, click
+import subprocess, click
 import os, time, datetime
 import logging
+from halo import Halo
+from git import Repo
+from git.exc import InvalidGitRepositoryError
 from colorama import Fore, init
 
 from watchdog.observers import Observer
@@ -127,11 +130,21 @@ def main():
 
 @click.command()
 @click.option("-i", "--init", prompt="initalize empty git repo", help="set to initalize an empty git repo", default=False)
-def git_init(initalize):
-    if not isinstance(initalize, bool):
-        TypeError("Argument must be a boolean(Yes or No)")
-    elif initalize == True:
+def git_init(init):
+    spinner = Halo(text='working on it', spinner='dots')
+    spinner.start()
+    if type(init) == bool and init == True:
+        try:
+            repo_dir = curr_dir
+            repo = Repo.init(repo_dir)
+        except InvalidGitRepositoryError as e:
+            print(f"Error: {e}")
+        time.sleep(3)
+        print("\nthanks")
+        spinner.stop()
+    else:
         print("hey")
+        
 
 
 @click.command()
