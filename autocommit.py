@@ -167,7 +167,7 @@ def push_type(push):
       subprocess.run(['git', 'push', 'origin', f'{branch}'], check=True)
 
 
-@click.commaun()
+@click.command()
 @click.option("--num_changes", "-n", type=int, required=True, help="Number of changes to make to occur for each commit session")
 def file_changes(changes):
     num_changes = changes
@@ -175,9 +175,20 @@ def file_changes(changes):
     changes += 1
     try:
         if changes >= num_changes:
-            subprocess.run(['git', 'add', '.'], check=True)
-            subprocess.run(['git', 'commit', '-m',"my commit"], check=True)
-            subprocess.run(['git', 'push', 'origin', f'{branch}'], check=True)
+            with open("commit_text.txt", "r") as f:
+                  contents = f.read()
+                    # split the contents into words
+                  words = contents.split()
+                    # create an empty dictionary to store the words
+                  word_count = {}
+                    # iterate through the words and add them to the dictionary
+                  for word in words:
+                        if word in word_count:
+                            word_count[word] += 1
+                        else:
+                            word_count[word] = 1
+                        print(word_count)
+
     except subprocess.CalledProcessError as e:
         print(f"Git push error with changes to : {e}, try to resolve this manually")
         changes = 0
@@ -186,6 +197,7 @@ def file_changes(changes):
 main.add_command(push_type)
 main.add_command(git_init)
 main.add_command(create_branch)
+main.add_command(file_changes)
 
 
 if __name__ == "__main__":
