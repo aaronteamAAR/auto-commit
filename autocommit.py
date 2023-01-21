@@ -142,7 +142,7 @@ def git_init(init):
         print("\nthanks")
         spinner.stop()
     else:
-        print("hey")
+        print("")
         
 
 @click.command()
